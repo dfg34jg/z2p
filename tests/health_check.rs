@@ -13,16 +13,15 @@ async fn health_check_works() {
         .send()
         .await
         .expect("Failed to execute GET request.");
-   
-    // Assert 
+
+    // Assert
     assert!(response.status().is_success());
-    assert_eq!(Some(0), response.content_length()); 
+    assert_eq!(Some(0), response.content_length());
 }
 
 // Launch app in bg
 fn spawn_app() -> String {
-    let listener = TcpListener::bind("127.0.0.1:0")
-        .expect("Failed to bind to random port.");
+    let listener = TcpListener::bind("127.0.0.1:0").expect("Failed to bind to random port.");
     // get port assigned by OS
     let port = listener.local_addr().unwrap().port();
     let server = z2p::run(listener).expect("Failed to bind address");
